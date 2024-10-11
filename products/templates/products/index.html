@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+</head>
+<body>
+    <h1>Product List</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            {{ product.name }} 
+            <a href="{% url 'delete_product' product.id %}">Delete</a>
+            <ul>
+                {% for variant in product.variants.all %}
+                <li>{{ variant.name }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Create New Product</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ product_form.as_p }}
+        <button type="submit" name="create_product">Add Product</button>
+    </form>
+
+    <h2>Create New Variant</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ variant_form.as_p }}
+        <button type="submit" name="create_variant">Add Variant</button>
+    </form>
+  
+</body>
+</html>
